@@ -20,7 +20,7 @@
     ],
     "keybindings": [
       {
-        "key": "ctrl+.",
+        "key": "ctrl+alt+'",
         "command": "neo-keybinds.helloWorld"
       }
     ]
