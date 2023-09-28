@@ -1,48 +1,30 @@
 {
-  "name": "neo-keybinds",
-  "displayName": "neo-keybinds",
+  "name": "neokeybinds",
+  "displayName": "neoKeybinds",
   "description": "Alternative keybindings for vscode with cheatsheet",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.82.0"
   },
   "categories": [
-    "Keymaps"
+    "Keymaps",
+    "Other"
   ],
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "neo-keybinds.helloWorld",
+        "command": "neokeybinds.helloWorld",
         "title": "Hello World"
-      },
-      {
-        "command": "neo-keybinds.backwards",
-        "title": "neo-keybinds (↹)"
       }
     ],
     "keybindings": [
       {
         "key": "ctrl+alt+'",
-        "command": "neo-keybinds.helloWorld"
+        "command": "neokeybinds.helloWorld"
       }
-    ],
-    "menus": {
-      "editor/title": [
-        {
-          "command": "neo-keybinds.backwards",
-          "group": "navigation",
-          "when": "resourceScheme == neo-keybinds"
-        }
-      ],
-      "commandPalette": [
-        {
-          "command": "neo-keybinds.backwards",
-          "when": "resourceScheme == neo-keybinds"
-        }
-      ]
-    }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
