@@ -1,26 +1,59 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+export function activate({ subscriptions }: vscode.ExtensionContext) {
+  console.log('Congratulations, your extension "neo-keybinds" is now active!');
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "neo-keybinds" is now active!');
+  const myScheme = "neo-keybinds";
+  const myProvider = new (class implements vscode.TextDocumentContentProvider {
+    onDidChangeEmitter = new vscode.EventEmitter<vscode.Uri>();
+    onDidChange = this.onDidChangeEmitter.event;
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('neo-keybinds.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from neo-keybinds!');
-	});
+    provideTextDocumentContent(uri: vscode.Uri): string {
+      return cowsay.say({ text: uri.path });
+    }
+  })();
 
-	context.subscriptions.push(disposable);
+  let disposable = vscode.commands.registerCommand(
+    "neo-keybinds.helloWorld",
+    () => {
+      vscode.window.showInformationMessage("Hello World from neo-keybinds!");
+    }
+  );
+
+  subscriptions.push(
+    vscode.workspace.registerTextDocumentContentProvider(myScheme, myProvider)
+  );
+
+  subscriptions.push(
+    vscode.commands.registerCommand("cowsay.say", async () => {
+      const what = await vscode.window.showInputBox({
+        placeHolder: "cowsay...",
+      });
+      if (what) {
+        const uri = vscode.Uri.parse("cowsay:" + what);
+        const doc = await vscode.workspace.openTextDocument(uri);
+        await vscode.window.showTextDocument(doc, { preview: false });
+      }
+    })
+  );
+
+  subscriptions.push(
+    vscode.commands.registerCommand("cowsay.backwards", async () => {
+      if (!vscode.window.activeTextEditor) {
+        return;
+      }
+      const { document } = vscode.window.activeTextEditor;
+      if (document.uri.scheme !== myScheme) {
+        return;
+      }
+      const say = document.uri.path;
+      const newSay = say.split("").reverse().join("");
+      const newUri = document.uri.with({ path: newSay });
+      await vscode.window.showTextDocument(newUri, { preview: false });
+    })
+  );
+
+  subscriptions.push(disposable);
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}

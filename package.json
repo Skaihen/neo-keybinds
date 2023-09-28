@@ -16,6 +16,10 @@
       {
         "command": "neo-keybinds.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "neo-keybinds.backwards",
+        "title": "neo-keybinds (↹)"
       }
     ],
     "keybindings": [
@@ -23,7 +27,22 @@
         "key": "ctrl+alt+'",
         "command": "neo-keybinds.helloWorld"
       }
-    ]
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "neo-keybinds.backwards",
+          "group": "navigation",
+          "when": "resourceScheme == neo-keybinds"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "neo-keybinds.backwards",
+          "when": "resourceScheme == neo-keybinds"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
