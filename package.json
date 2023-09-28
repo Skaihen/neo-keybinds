@@ -1,6 +1,6 @@
 {
   "name": "neokeybinds",
-  "displayName": "neoKeybinds",
+  "displayName": "neokeybinds",
   "description": "Alternative keybindings for vscode with cheatsheet",
   "version": "0.0.1",
   "engines": {

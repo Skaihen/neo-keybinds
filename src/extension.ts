@@ -6,7 +6,7 @@ export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
     "neokeybinds.helloWorld",
     () => {
-      vscode.window.showInformationMessage("Hello World from neoKeybinds!");
+      vscode.window.showInformationMessage("Hello World from neokeybinds!");
     }
   );
 
